@@ -12,3 +12,4 @@ faildf.to_csv("/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/out.csv"
               header=True, 
               columns=["id","name","subject","grade"],
               mode="w")
+print("something")
