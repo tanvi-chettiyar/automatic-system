@@ -9,6 +9,7 @@ faildf = df.query("grade<5")
 faildf.to_csv("/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/out.csv",
               sep="|",
               index=False,
+              
               header=True, 
               columns=["id","name","subject","grade"],
               mode="w")
