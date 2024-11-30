@@ -21,16 +21,29 @@ def postgresconnect():
     conn.close()
 
 if __name__ == "__main__":
+    #functional programming
     postgresconnect()
+    
+    #oops 
     pgobject = PostgresConnector(database="postgres", user="tanvi_rajkumar", password="", host="localhost", port="5432")
     print(f'object {pgobject.database} {pgobject.user} {pgobject.password} {pgobject.host} {pgobject.port}')
     pgconn, pgcur = pgobject.getConnection()
     pgcur.execute("select * from public.sample")
     print(pgcur.fetchall())
-    #pgobject.closeConnection()
+    pgobject.closeConnection()
 
-    pgobject2 = PostgresConnector(database="postgres", user="tanvi_rajkumar", password="", host="localhost", port="5432")
-    pgconn2, pgcur2 = pgobject2.getConnection()
-    pgcur2.execute("select * from public.sample where id = 1")
-    print(pgcur2.fetchall())
+    ## second open connection with oops
+    # pgobject2 = PostgresConnector(database="postgres", user="tanvi_rajkumar", password="", host="localhost", port="5432")
+    # pgconn2, pgcur2 = pgobject2.getConnection()
+    # pgcur2.execute("select * from public.sample where id = 1")
+    # print(pgcur2.fetchall())
+
+    #with clause
+    with PostgresConnector(database="postgres", user="tanvi_rajkumar", password="", host="localhost", port="5432") as curr:
+        curr.execute("select * from public.sample")
+        print(curr.fetchall())
+
+    print("exit")
+
+
 
