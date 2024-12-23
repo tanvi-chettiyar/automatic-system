@@ -1,0 +1,16 @@
+{
+    "data": [
+      {
+        "first": "Mary",
+        "last": "Smith",
+        "pay": 100000,
+        "dt": "datetime.date.today()"
+      },
+      {
+        "first": "Sam",
+        "last": "West",
+        "pay": 90000,
+        "dt": "datetime.date.today()"
+      }
+    ]
+  }
