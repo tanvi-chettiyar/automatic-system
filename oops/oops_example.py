@@ -19,7 +19,6 @@ class Employee:
         self.first = first
         self.last = last
         self.pay = pay
-        self.email = first + '.' + last + "@company.com"
 
         #Can use either class variable (Employee.varname) or instance variable (self.varname) but for this variable ...
         # we won't need the flexibility to change the variable for an instance so class variable makes more sense
@@ -59,9 +58,11 @@ class Employee:
     ## Magic/Dunder Methods
     def __repr__(self):
         return "Employee('{}', '{}', {})".format(self.first, self.last, self.pay)
+    # used to be unambiguous to help developers debug scripts
     
     def __str__(self):
         return '{} - {}'.format(self.fullname, self.email)
+    # used for readability 
     
     # def __add__(self, other):
     #     return self.pay + other.pay
@@ -73,6 +74,25 @@ class Employee:
     
 
     ## decorator
+    @property
+    def email(self):
+        return '{}.{}@company.com'.format(self.first, self.last)
+    
+    @property
+    def fullname_property(self):
+        return "{} {}". format(self.first, self.last)
+    
+    @fullname_property.setter
+    def fullname(self, name: str):
+        first, last = name.split(" ")   #you can split the name with a different splitter like - or _
+        self.first = first
+        self.last = last
+    
+    @fullname_property.deleter
+    def fullname(self):
+        self.first = None
+        self.last = None
+    
 
     
 ##SubClasses 
