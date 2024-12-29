@@ -1,5 +1,5 @@
 from typing import List, Optional
-from base.string import StringDatatype
+from base.string_class import StringDatatype
 
 class ListDatatype(StringDatatype):
     """
