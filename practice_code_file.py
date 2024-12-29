@@ -30,7 +30,8 @@
 # pyarrow_dataframe = pycsv.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt')
 # pycsv.write_csv(pyarrow_dataframe, '/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_pyarrow.txt', write_options = pycsv.WriteOptions(delimiter = '|'))
 
-
+import sys, os
+sys.path.append(os.path.abspath('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/base'))
 from base.list_class import ListDatatype
 from base.string_class import StringDatatype
 from base.dictionary_class import DictionaryDatatype
@@ -38,5 +39,13 @@ from base.tuple_class import TupleDatatype
 
 
 class DataTypes(ListDatatype, StringDatatype, DictionaryDatatype, TupleDatatype):
-    def __init__(self):
-        pass
+    def __init__(self, var1, var2):
+        self.var1 = var1
+        self.var2 = var2
+    
+    def CheckDataType(self):
+        if type(self.var1) == type(self.var2 ):
+            if type(self.var1) == list:
+                ListDatatype.merge_list_0(self.var1,self.var2)
+            elif type(self.var1) == str:
+                pass

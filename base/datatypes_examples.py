@@ -1,4 +1,4 @@
-from base.list_class import ListDatatype
+from list_class import ListDatatype
 
 def list_function(): 
     list_obj_1 = ListDatatype()
