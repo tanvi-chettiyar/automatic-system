@@ -1,6 +1,6 @@
 from typing import Optional
-from base.list_class import ListDatatype
-from base.string_class import StringDatatype
+from list_class import ListDatatype
+from string_class import StringDatatype
 
 class TupleDatatype:
     def __init__(self, tuple1: Optional[tuple] = None , tuple2: Optional[tuple]= None):

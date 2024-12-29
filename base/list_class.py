@@ -9,10 +9,10 @@ class ListDatatype(StringDatatype):
     :param list2 Optional List, Default = None
     """
 
-    def __init__(self,list1: Optional[List[str]]= None, list2: Optional[List[str]] = None):
-        self.list1 = list1 if list1 else []
-        self.list2 = list2 if list2 else []
-        super().__init__(list1)     #always calls the first parent inheritence class in this case is StringDatatype
+    def __init__(self,list1: List, list2: List):
+        self.list1 = list1 
+        self.list2 = list2 
+        # super().__init__(list1)     #always calls the first parent inheritence class in this case is StringDatatype
         #StringDatatype.__init__(list1) to call a parent class explicitly by name if there are multiple parent classes
     
     def merge_list_0(self):
