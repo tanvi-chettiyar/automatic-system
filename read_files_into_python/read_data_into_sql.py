@@ -1,9 +1,10 @@
-from postgres_connector import PostgresConnector
-import pandas
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from base.postgres_connector import PostgresConnector
 import psycopg2
 
 file_path = '/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt'
-# input_data = pandas.read_csv(file_path, sep= None, header=1)
 
 db_object = PostgresConnector(database='postgres', user= 'tanvi_rajkumar', password= '', host= 'localhost', port= '5432')
 db_conn, db_cur = db_object.getConnection()
@@ -46,15 +47,9 @@ select * from public.ext_student; """
 
 db_cur.execute(query4)
 
-
-
-
-# for index, rows in input_data.iterrows():
-#     print(rows)
-#     query = f"insert into public.pythonstudent values ({rows})"
-#     db_cur.execute(query)
-
 db_cur.execute('select * from public.ext_student')
 print(db_cur.fetchall())
 db_cur.close()
 db_conn.close()
+
+

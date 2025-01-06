@@ -1,6 +1,9 @@
 import psycopg2 as pg
 import pandas as pd
-from postgres_connector import PostgresConnector
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from base.postgres_connector import PostgresConnector
 
 
 def postgresconnect():
