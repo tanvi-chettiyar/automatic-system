@@ -2,7 +2,7 @@ import datetime
 print(datetime.datetime.now())
 
 import pandas
-df = pandas.read_csv("/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt")
+df = pandas.read_csv("/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt")
 print(df)
 ## print(df.filter(df["grade"]<5))
 faildf = df.query("grade<5")

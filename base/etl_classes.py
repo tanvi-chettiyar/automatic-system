@@ -1,3 +1,5 @@
+## ETL means Extract, Transform and Load
+
 import os, sys
 from typing import Dict
 
@@ -8,11 +10,6 @@ from base.postgres_connector import PostgresConnector
 from base.sql_commands_class import SQLCommands
 
 class UsingCopyExpert(PostgresConnector, SQLCommands):
-    command_dict: Dict[str, str] = {"create_table": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/create_table.sql", 
-                                    "copy_from_file": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/copy_to.sql", 
-                                    "external_table": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/external_table.sql",
-                                    "load_data": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/load_data.sql"}
-    
     def __init__(self, database: str, user: str, password: str, host: str, port: str, command: str):
         super(UsingCopyExpert, self).__init__(database, user, password, host, port)
         super(PostgresConnector, self).__init__(command)
@@ -28,14 +25,14 @@ class UsingCopyExpert(PostgresConnector, SQLCommands):
     
     def execute(self, command: str, filepath: str) -> None:
         db_conn, db_cur = PostgresConnector.getConnection(self)
-        # print(SQLCommands.get_sql_with_dict(command.lower())) #TRC
-        sql_file = SQLCommands.get_sql(command.lower())
-        print(sql_file)
+        # sql_file1 = SQLCommands.get_sql_with_dict(command.lower()) #TRC
+        sql_file2 = SQLCommands.get_sql(command.lower())
+        print(sql_file2)
 
-        if not os.path.exists(sql_file):
+        if not os.path.exists(sql_file2):
             raise FileNotFoundError('File not found')
         
-        with open(sql_file, 'r') as sql:
+        with open(sql_file2, 'r') as sql:
             sql_query = sql.read()
             # db_cur.execute(sql_query)
             # db_conn.commit()
@@ -51,6 +48,10 @@ postgres_parameters: Dict[str, str] = {"database": 'postgres',
                        "password": '', 
                        "host": 'localhost', 
                        "port": "5432",
-                       "filepath": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt"}
+                       "filepath": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt"}
 
 # UsingCopyExpert(**postgres_parameters).execute("Create_table")
+
+class UsingNativePython(PostgresConnector):
+    def __init__(self, database, user, password, host, port):
+        super().__init__(database, user, password, host, port)

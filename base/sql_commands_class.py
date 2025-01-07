@@ -3,6 +3,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from typing import Dict
 
 class SQLCommands():
+    ## change to function #TRC
     command_dict: Dict[str, str] = {"create_table": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/create_table.sql", 
                                     "copy_from_file": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/copy_to.sql", 
                                     "external_table": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/external_table.sql",
@@ -37,9 +38,12 @@ class SQLCommands():
         # Single Underscore in Function name means the method is to be used internally within the class and shouldn't be called outside.
         # It's called a private method. Python won't enforce anything but developers will understand the convention
         
+        # Double Underscore in Function name triggers name mangling in Python to make accidental or intentional overriding in subclasses less likely 
+        # by changing the name internally to include the class name as prefix (it's still possible to access this for the determined but is considered protected method)
+        
         raise ValueError("Invalid value passed. Acceptable values: create_table, copy_from_table, external_table, and load_data")
     
-    def get_sql_with_dict(self, command: str) -> None:
+    def get_sql_with_dict(self, command: str) -> str:
         """
         This method also checks which sql command to be performed with the use of a dictionary. 
         """

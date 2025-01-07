@@ -14,7 +14,7 @@ class PostgresConnector:
         self.conn = pg.connect(database=self.database, user=self.user, password=self.password, host=self.host, port=self.port)
         self.conn.autocommit = True
         print("Automatically Create Connection and Cursor")
-        return self.conn.cursor()
+        return self.conn, self.conn.cursor()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("Automatically Close Connection and Cursor")
