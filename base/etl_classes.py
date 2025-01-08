@@ -34,8 +34,8 @@ class UsingCopyExpert(PostgresConnector):
         
         with open(sql_file2, 'r') as sql:
             sql_query = sql.read()
-            # db_cur.execute(sql_query)
-            # db_conn.commit()
+            db_cur.execute(sql_query)
+            db_conn.commit()
             #auto commit not working. #TRC
 
         with open(filepath, 'r') as data_file:
