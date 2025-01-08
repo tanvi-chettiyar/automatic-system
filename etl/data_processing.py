@@ -55,7 +55,7 @@ def file_watcher(args: ArgumentParser, counter: int) -> str | List[str]:
 def main():
     """
     This program is to load a file to a database table
-    Usage: python data_processing.py -p "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt"
+    Usage: python data_processing.py -p "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt"
     """
     postgres_parameters: Dict[str, str] = {"database": 'postgres', 
                        "user":'tanvi_rajkumar', 

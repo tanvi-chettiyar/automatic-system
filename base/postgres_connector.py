@@ -42,16 +42,16 @@ class PostgresConnector:
     
 #     def __enter__(self):
 #         self.connect = pg.connect(database= self.database, user= self.user, password= self.password, host= self.host, port= self.port):
-#         return self.connect.cursor()
+#         return self.connect, self.connect.cursor()
     
 #     def __exit__(self):
 #         self.connect.close()
 
 #     def open_connection(self):
 #         self.connection = pg.connect(database= self.database, user= self.user, password= self.password, host= self.host, port= self.port)
-#         self.cursors = self.connection.cursor()
-#         return self.connection, self.cursors
+#         self.cursor = self.connection.cursor()
+#         return self.connection, self.cursor
     
 #     def close_connection(self):
-#         self.cursors.close()
+#         self.cursor.close()
 #         self.connection()
