@@ -9,7 +9,6 @@ command_dict: Dict[str, str] = {"create_table": "/Users/tanvi_rajkumar/Documents
                                     "load_data": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/sql_queries/load_data.sql"}
     
 
-
 def get_sql( command: str) -> str:
     """
     This method checks which sql operation to be performed. 
@@ -37,13 +36,14 @@ def _raise_error() -> None:
     # Double Underscore in Function name triggers name mangling in Python to make accidental or intentional overriding in subclasses less likely 
     # by changing the name internally to include the class name as prefix (it's still possible to access this for the determined but is considered protected method)
     
-    raise ValueError("Invalid value passed. Acceptable values: create_table, copy_from_table, external_table, and load_data")
+    raise ValueError("2. Invalid value passed. Acceptable values: create_table, copy_from_table, external_table, and load_data")
 
 def get_sql_with_dict(command: str) -> str:
     """
     This method also checks which sql command to be performed with the use of a dictionary. 
     """
     if command_dict.get(command):
-        return command_dict.get(command, _raise_error())
+        return command_dict.get(command)
     else:
-        raise ValueError("1. Invalid value passed. Acceptable values: create_table, copy_from_table, external_table, and load_data")
+        return _raise_error()
+    
