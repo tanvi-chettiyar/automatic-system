@@ -33,14 +33,14 @@ def file_watcher(args: ArgumentParser, counter: int) -> str | List[str]:
         files = [ os.path.join(args.path, file) for file in files_list]
         # print(files)
 
-        # if not files and counter <= int(ITERATION):
-        #     # raise FileNotFoundError(f"No files found in this directory {args.path} ")
-        #     sleep(5)
-        #     print(f'waited for 5 seconds {datetime.now()}')
-        #     counter += 1
-        #     file_watcher(args, counter)
-        # else:
-        #     raise FileNotFoundError(f"file_watcher waited for {ITERATION} iterations and exited afterwards")
+        if not files and counter <= int(ITERATION):
+            # raise FileNotFoundError(f"No files found in this directory {args.path} ")
+            sleep(5)
+            print(f'waited for 5 seconds {datetime.now()}')
+            counter += 1
+            file_watcher(args, counter)
+        else:
+            raise FileNotFoundError(f"file_watcher waited for {ITERATION} iterations and exited afterwards")
 
     elif os.path.exists(args.path) and os.path.isfile(args.path):
         print("path is a file")

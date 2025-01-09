@@ -1,7 +1,7 @@
 import psycopg2 as pg
 
 class PostgresConnector:
-    def __init__(self, database, user, password, host, port):
+    def __init__(self, database: str, user: str, password: str, host: str, port:str):
         self.database = database
         self.user = user
         self.password = password
@@ -33,7 +33,7 @@ class PostgresConnector:
 
 
 # class PostgresConnection():
-#     def __init__(self, database, user, password, host, port):
+#     def __init__(self, database: str, user: str, password: str, host: str, port: str):
 #         self.database = database
 #         self.user = user
 #         self.password = password

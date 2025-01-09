@@ -1,20 +1,21 @@
 from datetime import date
+from typing import List
 
 @staticmethod
 def print_current_date():
     #print(dir(date))
     pass
 
-current_year = 2024
+current_year: int = 2024
 ##Classes -  a blueprint for an instance of a class
 class Employee:
     
     #any variable outside the init method is a class variable which stays constant for any instance
-    num_of_emps = 0
-    raise_amount = 1.04
+    num_of_emps: int = 0
+    raise_amount: float = 1.04
     
     #instance is automatically the first argument is conventionally labeled self
-    def __init__(self, first, last, pay):
+    def __init__(self, first: str, last: str, pay: int):
         #self.____ is a instance variable
         self.first = first
         self.last = last
@@ -37,12 +38,12 @@ class Employee:
     
     #syntax for class method which always takes the class argument as first input and conventionally labeled cls
     @classmethod
-    def set_raise_amount(cls, amount):
+    def set_raise_amount(cls, amount: float):
         cls.raise_amount = amount
     
     #class methods as alternative constructors using the convention of naming the method with from
     @classmethod
-    def from_string(cls, emp_str):
+    def from_string(cls, emp_str: str):
         first, last, pay = emp_str.split('-')
         return cls(first,last,pay)
 
@@ -101,9 +102,9 @@ class Employee:
 # we can make changes to Parent class without directly changing the Parent class
 
 class Developer(Employee):
-    raise_amount1 = 1.10
+    raise_amount1: float = 1.10
 
-    def __init__ (self, first, last, pay, prog_lang):
+    def __init__ (self, first: str, last: str, pay: int, prog_lang: str):
         #super function is used to give access to methods and attributes of parent class
         super().__init__(first,last,pay)
         #Employee.__init__(self,first,last,pay)
@@ -114,7 +115,7 @@ class Developer(Employee):
 
 class Manager(Employee):
 
-    def __init__(self, first, last, pay, employees=None):
+    def __init__(self, first: str, last: str, pay: int, employees: List =None):
         super().__init__(first, last, pay)
         if employees is None:
             self.employees = []
