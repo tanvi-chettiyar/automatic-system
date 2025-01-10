@@ -1,4 +1,4 @@
-# input_file = open('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt', 'r')
+# input_file = open('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt', 'r')
 # output_file = open('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_untitled.txt', 'w')
 # for contents in input_file.readlines():
 #     output_file.write(contents)
@@ -7,27 +7,27 @@
 
 # import pandas
 
-# pandas_dataframe = pandas.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt', sep= ',')
+# pandas_dataframe = pandas.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt', sep= ',')
 # pandas_dataframe.to_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_df.txt', sep= '|', header= True, index = False, mode= 'w')
 
 # import duckdb
 
-# duckdb_dataframe = duckdb.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt', sep= ',')
+# duckdb_dataframe = duckdb.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt', sep= ',')
 # duckdb_dataframe.to_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_duckDb.txt', sep= '|', header= True)
 
 # import polars
 
-# polars_dataframe = polars.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt', separator= ',')
+# polars_dataframe = polars.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt', separator= ',')
 # polars_dataframe.write_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_polars.txt', separator= '|', include_header= True)
 
 # import dask.dataframe as daskdf
 
-# dask_df = daskdf.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt')
+# dask_df = daskdf.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt')
 # dask_df.to_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_dask.txt', sep= '|', index= False, header= True)
 
 # import pyarrow.csv as pycsv
 
-# pyarrow_dataframe = pycsv.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student.txt')
+# pyarrow_dataframe = pycsv.read_csv('/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/etl/data/student.txt')
 # pycsv.write_csv(pyarrow_dataframe, '/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system/student_pyarrow.txt', write_options = pycsv.WriteOptions(delimiter = '|'))
 
 # import sys, os
