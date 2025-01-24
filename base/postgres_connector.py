@@ -55,3 +55,28 @@ class PostgresConnector:
 #     def close_connection(self):
 #         self.cursor.close()
 #         self.connection()
+
+
+## created a class names PostgresConnector where class is like an object constructor, or a "blueprint" for creating objects.
+
+	## __init__(val1,val2,val3,etc.) is used to assign values to object properties, or other operations that are necessary ...
+    ## to do when the object is called
+
+        ## self.val1 = val1, etc. assign values to object properties so that if the object is called all values ...
+        ## are pre-assigned
+
+	## this special function is used when the WITH statement is entered. It's responsible for setting up the context, ...
+    ## acquiring resources, and returning the object that the with statement will use.
+
+        ## using object assigned values, create a connection to database
+    
+    ## this special function is used automatically when the with block is exited, regardless of whether an exception ...
+    ## occurred within the block. It takes three arguments: exc_type: (the type of the exception raised, if any), ...
+    ## exc_value: (the exception instance, if any) and traceback: (the traceback object, if any.)
+
+        ## using object assigned values, close the connection to database
+
+    ## created a function to make a connection to a database using object assigned values and used a return statement ...
+    ## to output the connection and cursor object
+
+    ## created a function to close a connection to a database using object assigned values 
