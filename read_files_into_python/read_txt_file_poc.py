@@ -116,7 +116,7 @@ def remove_files():
         # from time import sleep
         # sleep(10)
         from contextlib import suppress
-        with suppress(PermissionError, FileNotFoundError) as pe:
+        with suppress(PermissionError, FileNotFoundError):
             os.remove(output_file)
 
 def main():

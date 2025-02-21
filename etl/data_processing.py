@@ -8,7 +8,7 @@ from datetime import datetime
 from base.etl_classes import UsingCopyExpert
 
 
-ITERATION: Final[str] = 2
+ITERATION: Final[str] = "2"
 
 def parse_arguments() -> ArgumentParser:
     """
