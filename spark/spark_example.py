@@ -1,7 +1,7 @@
 ## SparkSession vs SparkContext
 
 # SparkContext is the entry point for lower-level Spark functionality, primarily focused on RDD-based operations
-# where RDD is resilient distributed dataset(which is used primarily when dealing with unstructured data).
+# where RDD is Resilient Distributed Dataset (which is used primarily when dealing with unstructured data).
 
 # SparkSession is the unified entry point for all high-level Spark functionality combining SparkContext, SQL Context
 # and HiveContext. It is primarily focused on dataframes. SparkSession wraps SparkContext meaning you can access
