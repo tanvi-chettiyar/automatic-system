@@ -3,6 +3,9 @@ import psycopg2
 from datetime import datetime
 from typing import Final 
 from json import dumps, load
+from flatten_json import flatten
+from pandas import DataFrame as DF
+import os
 
 # WeatherAPI Configuration
 API_KEY: Final[str] = "c2fe5ebd74734989a33163320252302"
@@ -11,8 +14,9 @@ BASE_URL: Final[str] = "http://api.weatherapi.com/v1/forecast.json"
 CITY: Final[str]= "New York"
 COUNTRY: Final[str] = "US"
 
-
-data_filepath = f"""/home/tanvi/Documents/GitRepo/automatic-system/etl/data/weather_{datetime.today().strftime("%Y%m%d")}.json"""
+base_path = os.path.dirname(os.path.realpath(__file__))
+data_filepath = os.path.join(base_path,f'''data/weather.json''')
+data_csvpath = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}.csv''')
 pull_request = False
 
 # Function to fetch weather data
@@ -35,30 +39,22 @@ if __name__ == "__main__":
         with open(data_filepath, "w") as writej:
             writej.write(dumps(weather_data, indent=2))
     
-    # print(weather_data)
+    # df = flatten(weather_data)
 
-    weather_dict = {"today": {"temp_c": "23", "condition": "sunny"}, "tomorrow": {"temp_c": "24", "condition": "rainy"}}
-    weather = {"today": [{"temp_c": "23", "condition": "sunny"},{"temp_c": "24", "condition": "rainy"}]}
-    a = ['23', 'sunny']
+    # new_df = DF([df])
+    # new_df.to_csv(path_or_buf=data_csvpath, sep='|', header=True, mode='w', index=False)
 
-    temp = {"temp_c": 23 }
-    temp2 = {"temp_c": 24}
-    b = {'temperature': [temp, temp2]}
-    new = weather_dict["today"]["temp_c"]
-    print(new)
-
-
-
-    for item in weather["today"]:
-        
-        print(item['condition'])
-
-    # print(weather_dict['condition'])
 
     from pandas import json_normalize
 
-    df_simple = json_normalize(weather)
-    print(df_simple.head())
+    ndf =  json_normalize(weather_data, 
+                          record_path=['forecast', 'forecastday', 'hour'], 
+                          meta=[['forecast', 'forecastday', 'date'], ['forecast', 'forecastday', 'date_epoch'], ['forecast', 'forecastday', 'day', 'maxtemp_c'] ], 
+                          sep='.', 
+                        #   errors='ignore', 
+                          max_level=None)
+
+    ndf.to_csv(path_or_buf=data_csvpath, sep='|', header=True, mode='w', index=False)
 
     # store_weather_data(weather_data)
     print("Weather data stored successfully.")

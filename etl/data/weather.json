@@ -3,6 +3,7 @@
     "name": "Piscataway",
     "region": "New Jersey",
     "country": "USA",
+    "xxx": "aaa",
     "lat": 40.5527,
     "lon": -74.4582,
     "tz_id": "America/New_York",
