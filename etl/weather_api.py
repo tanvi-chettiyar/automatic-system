@@ -46,11 +46,12 @@ if __name__ == "__main__":
 
     location_data = weather_data['location']
     location_df = DF([location_data])
-    # location_df.to_csv(path_or_buf=data_csvpath1, sep='|', header=True, mode='w', index=False)
+    location_df.to_csv(path_or_buf=data_csvpath1, sep='|', header=True, mode='w', index=False)
     
     current_data = weather_data['current']
-    current_df = DF([current_data])
-    # current_df.to_csv(path_or_buf=data_csvpath2, sep='|', header=True, mode='w', index=False)
+    current_df = json_normalize(current_data)
+    current_df.columns = current_df.columns.str.replace("current.", "", regex=False)
+    current_df.to_csv(path_or_buf=data_csvpath2, sep='|', header=True, mode='w', index=False)
 
     # ndf3 =  json_normalize(weather_data, 
     #                       record_path=['forecast', 'forecastday', 'day'], 
@@ -73,4 +74,4 @@ if __name__ == "__main__":
     # store_weather_data(weather_data)
     print("Weather data stored successfully.")
 
-    lwd.load_location_data(data_csvpath1, 1)
+    # lwd.load_location_data(data_csvpath1, 1)
