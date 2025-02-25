@@ -3,9 +3,9 @@ import psycopg2
 from datetime import datetime
 from typing import Final 
 from json import dumps, load
-from flatten_json import flatten
-from pandas import DataFrame as DF
+from pandas import DataFrame as DF, json_normalize
 import os
+import load_weather_data as lwd
 
 # WeatherAPI Configuration
 API_KEY: Final[str] = "c2fe5ebd74734989a33163320252302"
@@ -14,9 +14,14 @@ BASE_URL: Final[str] = "http://api.weatherapi.com/v1/forecast.json"
 CITY: Final[str]= "New York"
 COUNTRY: Final[str] = "US"
 
+#{datetime.today().strftime("%Y%m%d")}
+
 base_path = os.path.dirname(os.path.realpath(__file__))
-data_filepath = os.path.join(base_path,f'''data/weather.json''')
-data_csvpath = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}.csv''')
+data_filepath = os.path.join(base_path,f'''data/weather_20250223.json''')
+data_csvpath1 = os.path.join(base_path,f'''data/weather_20250223_1.csv''')
+data_csvpath2 = os.path.join(base_path,f'''data/weather_20250223_2.csv''')
+data_csvpath3 = os.path.join(base_path,f'''data/weather_20250223_3.csv''')
+data_csvpath4 = os.path.join(base_path,f'''data/weather_20250223_4.csv''')
 pull_request = False
 
 # Function to fetch weather data
@@ -38,23 +43,34 @@ if __name__ == "__main__":
     if pull_request:
         with open(data_filepath, "w") as writej:
             writej.write(dumps(weather_data, indent=2))
+
+    location_data = weather_data['location']
+    location_df = DF([location_data])
+    # location_df.to_csv(path_or_buf=data_csvpath1, sep='|', header=True, mode='w', index=False)
     
-    # df = flatten(weather_data)
+    current_data = weather_data['current']
+    current_df = DF([current_data])
+    # current_df.to_csv(path_or_buf=data_csvpath2, sep='|', header=True, mode='w', index=False)
 
-    # new_df = DF([df])
-    # new_df.to_csv(path_or_buf=data_csvpath, sep='|', header=True, mode='w', index=False)
+    # ndf3 =  json_normalize(weather_data, 
+    #                       record_path=['forecast', 'forecastday', 'day'], 
+    #                       meta=[['forecast', 'forecastday', 'date'], ['forecast', 'forecastday', 'date_epoch']], 
+    #                       sep='.', 
+    #                     #   errors='ignore', 
+    #                       max_level=None)
+    
+    # print(ndf3)
 
-
-    from pandas import json_normalize
-
-    ndf =  json_normalize(weather_data, 
+    ndf4 =  json_normalize(weather_data, 
                           record_path=['forecast', 'forecastday', 'hour'], 
                           meta=[['forecast', 'forecastday', 'date'], ['forecast', 'forecastday', 'date_epoch'], ['forecast', 'forecastday', 'day', 'maxtemp_c'] ], 
                           sep='.', 
                         #   errors='ignore', 
                           max_level=None)
 
-    ndf.to_csv(path_or_buf=data_csvpath, sep='|', header=True, mode='w', index=False)
+    # ndf4.to_csv(path_or_buf=data_csvpath, sep='|', header=True, mode='w', index=False)
 
     # store_weather_data(weather_data)
     print("Weather data stored successfully.")
+
+    lwd.load_location_data(data_csvpath1, 1)
