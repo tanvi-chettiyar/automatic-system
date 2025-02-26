@@ -72,9 +72,11 @@ if __name__ == "__main__":
     hourly_df.to_csv(path_or_buf=data_csvpath4, sep='|', header=True, mode='w', index=False)
 
 
-    lwd.load_location_data(data_csvpath1, id)
-    lwd.load_current_data(data_csvpath2, id)
-    lwd.load_daily_data(data_csvpath3, id)
-    lwd.load_hourly_data(data_csvpath4, f'{datetime.today().strftime("%Y%m%d")}')
+    # lwd.load_location_data(data_csvpath1, id)
+    # lwd.load_current_data(data_csvpath2, id)
+    # lwd.load_daily_data(data_csvpath3, id)
+    # lwd.load_hourly_data(data_csvpath4, f'{datetime.today().strftime("%Y%m%d")}')
 
     print('Weather data loaded successfully')
+
+

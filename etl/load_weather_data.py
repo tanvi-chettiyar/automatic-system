@@ -86,3 +86,6 @@ def load_hourly_data(csvfile: str, date: str):
             cur.execute(f"update target.hourly set start_date = CURRENT_DATE, end_date = NULL, is_active = TRUE where date = '{date}';")
 
             conn.commit()
+
+
+
