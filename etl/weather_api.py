@@ -5,7 +5,10 @@ from typing import Final
 from json import dumps, load
 from pandas import DataFrame as DF, json_normalize
 import os
-import load_weather_data as lwd
+# import load_weather_data as lwd
+# from load_weather_data import ( load_current_data, load_daily_data, load_hourly_data, load_location_data )
+from load_weather_data import *
+
 
 # WeatherAPI Configuration
 API_KEY: Final[str] = "c2fe5ebd74734989a33163320252302"
