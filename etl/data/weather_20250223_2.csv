@@ -1,2 +1,0 @@
-last_updated_epoch|last_updated|temp_c|temp_f|is_day|wind_mph|wind_kph|wind_degree|wind_dir|pressure_mb|pressure_in|precip_mm|precip_in|humidity|cloud|feelslike_c|feelslike_f|windchill_c|windchill_f|heatindex_c|heatindex_f|dewpoint_c|dewpoint_f|vis_km|vis_miles|uv|gust_mph|gust_kph|condition_text|condition_icon|condition_code
-1740348000|2025-02-23 17:00|7.8|46.0|1|6.0|9.7|258|WSW|1017.0|30.04|0.0|0.0|37|0|6.1|42.9|2.4|36.3|5.2|41.4|-3.9|25.1|16.0|9.0|0.0|10.1|16.3|Sunny|//cdn.weatherapi.com/weather/64x64/day/113.png|1000
