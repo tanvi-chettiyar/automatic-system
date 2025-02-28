@@ -20,12 +20,19 @@ COUNTRY: Final[str] = "US"
 #{datetime.today().strftime("%Y%m%d")}
 
 base_path = os.path.dirname(os.path.realpath(__file__))
-data_filepath = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}.json''')
-data_csvpath1 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_1.csv''')
-data_csvpath2 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_2.csv''')
-data_csvpath3 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_3.csv''')
-data_csvpath4 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_4.csv''')
-pull_request = True
+# data_filepath = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}.json''')
+# data_csvpath1 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_1.csv''')
+# data_csvpath2 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_2.csv''')
+# data_csvpath3 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_3.csv''')
+# data_csvpath4 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_4.csv''')
+
+data_filepath = os.path.join(base_path,f'''data/weather_20250227.json''')
+data_csvpath1 = os.path.join(base_path,f'''data/weather_20250227_1.csv''')
+data_csvpath2 = os.path.join(base_path,f'''data/weather_20250227_2.csv''')
+data_csvpath3 = os.path.join(base_path,f'''data/weather_20250227_3.csv''')
+data_csvpath4 = os.path.join(base_path,f'''data/weather_20250227_4.csv''')
+
+pull_request = False
 
 id = 1
 
@@ -52,18 +59,25 @@ if __name__ == "__main__":
     location_data = weather_data['location']
     location_df = DF([location_data])
     location_df.to_csv(path_or_buf=data_csvpath1, sep='|', header=True, mode='w', index=False)
+    location_dict = location_df.to_dict(orient='records')
+    location_hash = generate_hash(location_dict, 'locations')
 
 
     current_data = weather_data['current']
     current_df = json_normalize(current_data)
     current_df.columns = current_df.columns.str.replace("current.", "", regex=False)
     current_df.to_csv(path_or_buf=data_csvpath2, sep='|', header=True, mode='w', index=False)
+    current_dict = current_df.to_dict(orient='records')
+    current_hash = generate_hash(current_dict, 'current')
+    print(current_hash)
+    
 
-
-    daily_df =  json_normalize(weather_data['forecast']['forecastday'][0]['day'])
+    daily_df = json_normalize(weather_data['forecast']['forecastday'][0]['day'])
     daily_df.insert(loc=0, column='date', value=weather_data['forecast']['forecastday'][0]['date'])
     daily_df.insert(loc=1, column='date_epoch', value=weather_data['forecast']['forecastday'][0]['date_epoch'])
     daily_df.to_csv(path_or_buf=data_csvpath3, sep="|", header=True, mode='w', index=False)
+    daily_dict = daily_df.to_dict(orient='records')
+    daily_hash = generate_hash(daily_dict, 'daily')
 
 
     hourly_df =  json_normalize(weather_data, 
@@ -73,13 +87,16 @@ if __name__ == "__main__":
                           max_level=None)
     hourly_df = hourly_df.rename(columns={'forecast.forecastday.date': 'date', 'forecast.forecastday.date_epoch':'date_epoch'})
     hourly_df.to_csv(path_or_buf=data_csvpath4, sep='|', header=True, mode='w', index=False)
+    hourly_dict = hourly_df.to_dict(orient='records')
+    hourly_hash = generate_hash(hourly_dict, 'hourly')
 
 
-    # lwd.load_location_data(data_csvpath1, id)
-    # lwd.load_current_data(data_csvpath2, id)
-    # lwd.load_daily_data(data_csvpath3, id)
-    # lwd.load_hourly_data(data_csvpath4, f'{datetime.today().strftime("%Y%m%d")}')
+    # load_location_data(location_dict, location_hash, data_csvpath1)
+    # load_current_data(current_hash, data_csvpath2)
+    load_daily_data(daily_hash, data_csvpath3)
+    # load_hourly_data(hourly_hash, data_csvpath4, f'{datetime.today().strftime("%Y%m%d")}')
 
     print('Weather data loaded successfully')
+
 
 
