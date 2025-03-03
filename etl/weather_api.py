@@ -20,17 +20,17 @@ COUNTRY: Final[str] = "US"
 #{datetime.today().strftime("%Y%m%d")}
 
 base_path = os.path.dirname(os.path.realpath(__file__))
-# data_filepath = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}.json''')
-# data_csvpath1 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_1.csv''')
-# data_csvpath2 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_2.csv''')
-# data_csvpath3 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_3.csv''')
-# data_csvpath4 = os.path.join(base_path,f'''data/weather_{datetime.today().strftime("%Y%m%d")}_4.csv''')
+# data_filepath = os.path.join(base_path,f'''data/weather/weather_{datetime.today().strftime("%Y%m%d")}.json''')
+# data_csvpath1 = os.path.join(base_path,f'''data/weather/locations_{datetime.today().strftime("%Y%m%d")}.csv''')
+# data_csvpath2 = os.path.join(base_path,f'''data/weather/current_{datetime.today().strftime("%Y%m%d")}.csv''')
+# data_csvpath3 = os.path.join(base_path,f'''data/weather/daily_{datetime.today().strftime("%Y%m%d")}.csv''')
+# data_csvpath4 = os.path.join(base_path,f'''data/weather/hourly_{datetime.today().strftime("%Y%m%d")}.csv''')
 
-data_filepath = os.path.join(base_path,f'''data/weather_20250227.json''')
-data_csvpath1 = os.path.join(base_path,f'''data/weather_20250227_1.csv''')
-data_csvpath2 = os.path.join(base_path,f'''data/weather_20250227_2.csv''')
-data_csvpath3 = os.path.join(base_path,f'''data/weather_20250227_3.csv''')
-data_csvpath4 = os.path.join(base_path,f'''data/weather_20250227_4.csv''')
+data_filepath = os.path.join(base_path,f'''data/weather/weather_20250228.json''')
+data_csvpath1 = os.path.join(base_path,f'''data/weather/locations_20250228.csv''')
+data_csvpath2 = os.path.join(base_path,f'''data/weather/current_20250228.csv''')
+data_csvpath3 = os.path.join(base_path,f'''data/weather/daily_20250228.csv''')
+data_csvpath4 = os.path.join(base_path,f'''data/weather/hourly_20250228.csv''')
 
 pull_request = False
 
@@ -60,7 +60,7 @@ def store_weather (weather_data, table_name: str, csv_path: str) -> Dict[str, An
     
     elif table_name =='current':
         current_data = weather_data['current']
-        current_df = json_normalize(current_data)
+        current_df = json_normalize(current_data, meta= [])
         current_df.columns = current_df.columns.str.replace("current.", "", regex=False)
         current_df.to_csv(path_or_buf=csv_path, sep='|', header=True, mode='w', index=False)
         current_dict = current_df.to_dict(orient='records')

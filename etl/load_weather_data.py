@@ -16,6 +16,7 @@ def load_location_data(data: Dict, data_hash: str,csvfile: str):
     with PostgresConnection(**postgres_params) as [conn, cur]:
         with open(csvfile, mode='r') as data:
             cur.copy_expert(sql="copy stage.locations (city_name, region, country, latitude, longitude, timezone_id, local_time_epoch, local_time) from STDIN with csv header delimiter '|';", file=data)
+            
         cur.execute(f"""UPDATE stage.locations
                         SET rec_hash = MD5(CONCAT(city_name,region,country,latitude,longitude,timezone_id,local_time_epoch,local_time))
                         WHERE NULL""")
