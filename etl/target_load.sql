@@ -1,5 +1,3 @@
---target load
---for location table
 update target.location tgl
 set city_name = prl.city_name,
 	region = prl.region,
@@ -13,28 +11,20 @@ set city_name = prl.city_name,
 	sys_rec_hash = prl.sys_rec_hash 
 from prep.location prl	
 where prl.sys_cdc_flag = 'U';
-
 update target.location tgl
 set sys_end_date = Current_Date,
 	sys_is_active = false
 from prep.location prl
-where prl.sys_cdc_flag = 'I';
-
+where prl.sys_cdc_flag = 'I' and tgl.sys_end_date is Null;
 insert into target.location
 select city_name,region,country,latitude,longitude,timezone_id,local_time_epoch,local_time,process_uuid,sys_rec_hash
 from prep.location
 where sys_cdc_flag = 'I';
-
 update target.location
 set sys_start_date = Current_Date,
 	sys_is_active = True
 where sys_start_date is Null;
-
 commit ;
-
--- select * from target.location;
-
---for current table
 update target.currently tgc
 set last_updated_epoch = prc.last_updated_epoch,
 	last_updated = prc.last_updated,
@@ -71,28 +61,20 @@ set last_updated_epoch = prc.last_updated_epoch,
 	sys_rec_hash = prc.sys_rec_hash
 from prep.currently prc
 where prc.sys_cdc_flag = 'U';
-
 update target.currently tgc
 set sys_end_date = Current_Date,
 	sys_is_active = False
 from prep.currently prc
-where prc.sys_cdc_flag = 'I';
-
+where prc.sys_cdc_flag = 'I' and tgc.sys_end_date is Null;
 insert into target.currently
 select last_updated_epoch, last_updated, temp_c, temp_f, is_day, wind_mph, wind_kph, wind_degree, wind_dir, pressure_mb, pressure_in, precip_mm, precip_in, humidity, cloud, feelslike_c, feelslike_f, windchill_c, windchill_f, heatindex_c, heatindex_f, dewpoint_c, dewpoint_f, vis_km, vis_miles, uv, gust_mph, gust_kph, process_uuid, condition_text, condition_icon, condition_code, sys_rec_hash
 from prep.currently 
 where sys_cdc_flag = 'I';
-
 update target.currently
 set sys_start_date = Current_Date,
 	sys_is_active = True
 where sys_start_date is Null;
-
 commit;
-
--- select* from target.currently;
-
---for daily table
 update target.daily tgd
 set maxtemp_c = prd.maxtemp_c,
 	maxtemp_f = prd.maxtemp_f,
@@ -120,28 +102,20 @@ set maxtemp_c = prd.maxtemp_c,
 	sys_rec_hash = prd.sys_rec_hash
 from prep.daily prd
 where prd.sys_cdc_flag ='U';
-
 update target.daily tgd
 set sys_end_date = Current_Date,
 	sys_is_active = false
 from prep.daily prd
-where prd.sys_cdc_flag = 'I';
-
+where prd.sys_cdc_flag = 'I' and tgd.sys_end_date is Null;
 insert into target.daily 
 select maxtemp_c, maxtemp_f, mintemp_c, mintemp_f, avgtemp_c, avgtemp_f, maxwind_mph, maxwind_kph, totalprecip_mm, totalprecip_in, totalsnow_cm, avgvis_km, avgvis_miles, avghumidity, daily_will_it_rain, daily_chance_of_rain, daily_will_it_snow, daily_chance_of_snow, uv, process_uuid, condition_text, condition_icon, condition_code, sys_rec_hash
 from prep.daily
 where sys_cdc_flag = 'I';
-
 update target.daily
 set sys_start_date = Current_Date,
 	sys_is_active = true
 where sys_start_date is null;
-
 commit;
-
--- select * from target.daily;
-
---for hourly table
 update target.hourly tgh
 set time_epoch = prh.time_epoch,
 	time = prh.time,
@@ -185,23 +159,17 @@ set time_epoch = prh.time_epoch,
 	sys_rec_hash = prh.sys_rec_hash
 from prep.hourly prh
 where prh.sys_cdc_flag  = 'U';
-
 update target.hourly tgh
 set sys_end_date = Current_Date,
 	sys_is_active = false
 from prep.hourly prh
-where prh.sys_cdc_flag = 'I';
-
+where prh.sys_cdc_flag = 'I' and tgh.sys_end_date is Null;
 insert into target.hourly
 select time_epoch, "time", temp_c, temp_f, is_day, wind_mph, wind_kph, wind_degree, wind_dir, pressure_mb, pressure_in, precip_mm, precip_in, snow_cm, humidity, cloud, feelslike_c, feelslike_f, windchill_c, windchill_f, heatindex_c, heatindex_f, dewpoint_c, dewpoint_f, will_it_rain, chance_of_rain, will_it_snow, chance_of_snow, vis_km, vis_miles, gust_mph, gust_kph, uv, condition_text, condition_icon, condition_code, "date", date_epoch, process_uuid, sys_rec_hash
 from prep.hourly 
 where sys_cdc_flag = 'I';
-
 update target.hourly
 set sys_start_date = Current_Date,
 	sys_is_active = true
 where sys_start_date is null;
-
 commit;
-
--- select * from target.hourly;

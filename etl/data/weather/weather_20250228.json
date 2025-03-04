@@ -8,7 +8,7 @@
     "tz_id": "America/New_York",
     "localtime_epoch": 1740693581,
     "localtime": "2025-02-28 16:59",
-    "process_uuid": "fe05a819-2436-4767-a65d-a1e4814f71e6"
+    "process_uuid": "58437bce-b71c-4061-86a0-e38dd44e47ff"
   },
   "current": {
     "last_updated_epoch": 1740692700,
@@ -44,7 +44,7 @@
     "uv": 0.2,
     "gust_mph": 19.3,
     "gust_kph": 31.1,
-    "process_uuid": "fe05a819-2436-4767-a65d-a1e4814f71e6"
+    "process_uuid": "58437bce-b71c-4061-86a0-e38dd44e47ff"
   },
   "forecast": {
     "forecastday": [
@@ -76,7 +76,7 @@
             "code": 1063
           },
           "uv": 0.3,
-          "process_uuid": "fe05a819-2436-4767-a65d-a1e4814f71e6"
+          "process_uuid": "58437bce-b71c-4061-86a0-e38dd44e47ff"
         },
         "astro": {
           "sunrise": "06:34 AM",
@@ -1050,7 +1050,7 @@
             "uv": 0
           }
         ],
-        "process_uuid": "fe05a819-2436-4767-a65d-a1e4814f71e6"
+        "process_uuid": "58437bce-b71c-4061-86a0-e38dd44e47ff"
       }
     ]
   }

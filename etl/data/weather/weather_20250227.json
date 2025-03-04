@@ -7,7 +7,8 @@
     "lon": -74.4582,
     "tz_id": "America/New_York",
     "localtime_epoch": 1740693581,
-    "localtime": "2025-02-27 16:59"
+    "localtime": "2025-02-27 16:59",
+    "process_uuid": "b49a5839-3d50-4a99-98e1-ee02607e3d9a"
   },
   "current": {
     "last_updated_epoch": 1740692700,
@@ -42,7 +43,8 @@
     "vis_miles": 9.0,
     "uv": 0.2,
     "gust_mph": 19.3,
-    "gust_kph": 31.1
+    "gust_kph": 31.1,
+    "process_uuid": "b49a5839-3d50-4a99-98e1-ee02607e3d9a"
   },
   "forecast": {
     "forecastday": [
@@ -73,7 +75,8 @@
             "icon": "//cdn.weatherapi.com/weather/64x64/day/176.png",
             "code": 1063
           },
-          "uv": 0.3
+          "uv": 0.3,
+          "process_uuid": "b49a5839-3d50-4a99-98e1-ee02607e3d9a"
         },
         "astro": {
           "sunrise": "06:34 AM",
@@ -1046,7 +1049,8 @@
             "gust_kph": 25.8,
             "uv": 0
           }
-        ]
+        ],
+        "process_uuid": "b49a5839-3d50-4a99-98e1-ee02607e3d9a"
       }
     ]
   }

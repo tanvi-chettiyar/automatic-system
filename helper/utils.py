@@ -64,6 +64,15 @@ def load_stage(schema: str, table: str, csv_file_path: str, delimiter: Optional[
 
             print(f"successfully loaded {table} to postgres from csv {csv_file_path}")
 
+def table_load(sql_script: str) -> None:
+    with PostgresConnection(**postgres_params) as (conn, cur):
+        with open (sql_script, 'r') as sql:
+            sql_query = sql.read().split(';')
+            cur.execute(';'.join(sql_query))
+            conn.commit()
+        print(f"Loaded {sql_script} successfully")
+
+
 
 def flatten_json(json_data: str, csv_file_path, record_path: Union[str, List[str], None] = None, meta: Union[str, List[Any], None] = None, suppress_error: Optional[bool]= False, seperator: Optional[str] = '_', max_level: Optional[int] = 1) -> str:
     """

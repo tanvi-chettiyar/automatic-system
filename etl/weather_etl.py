@@ -1,14 +1,15 @@
 import requests
 import sys, os
 sys.path.insert(0,(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from datetime import datetime
-from typing import Final
-
+from typing import Final 
 from json import load, dumps
-
 from uuid import uuid4
+
 from pathlib import Path
 from helper.utils import *
+
 
 
 process_uuid = str(uuid4())
@@ -22,13 +23,16 @@ currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather
 hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_{datetime.today().strftime('%Y%m%d')}.csv")
 daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_{datetime.today().strftime('%Y%m%d')}.csv")
 
-# base_file_path = os.path.dirname(os.path.realpath(__file__))
+prep_load_script = Path(__file__).parent.absolute().joinpath("prep_load.sql")
+target_load_script = Path(__file__).parent.absolute().joinpath("target_load.sql")
 
-# json_file_path = os.path.join(base_file_path,f'''data/weather/weather_{datetime.today().strftime("%Y%m%d")}.json''')
-# location_file_path = os.path.join(base_file_path,f'''data/weather/location_{datetime.today().strftime("%Y%m%d")}.csv''')
-# currently_file_path = os.path.join(base_file_path,f'''data/weather/currently_{datetime.today().strftime("%Y%m%d")}.csv''')
-# daily_file_path = os.path.join(base_file_path,f'''data/weather/daily_{datetime.today().strftime("%Y%m%d")}.csv''')
-# hourly_file_path = os.path.join(base_file_path,f'''data/weather/hourly_{datetime.today().strftime("%Y%m%d")}.csv''')
+# json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"weather_20250303.json")
+
+# location_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"location_20250303.csv")
+# currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"currently_20250303.csv")
+# hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_20250303.csv")
+# daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_20250303.csv")
+
 
 # WeatherAPI Configuration
 API_KEY: Final[str] = "c2fe5ebd74734989a33163320252302"
@@ -50,7 +54,7 @@ def fetch_weather(city: str, country: str, pull_request: bool = False):
         with open(json_file_path, "r") as data:
             return load(data)
 
-def masssage_json_data():
+def masssage_json_data() -> None:
     """
     Add UUID to JSON Data
     """
@@ -70,7 +74,7 @@ def masssage_json_data():
 
 def create_stage_files() -> None:
     """
-    create_stage_files
+    Create_stage_files
     """
 
     with open(json_file_path, 'r') as json_obj:        
@@ -91,11 +95,15 @@ def create_stage_files() -> None:
     flatten_json(json_data['current'], currently_file_path)
 
 
-def stage_load(base_file_path: Optional[str] = base_file_path):
+def stage_load(base_file_path: Optional[str] = base_file_path) -> None:
+    """
+    Load files into stage tables
+    """
 
     files_only = [file for file in base_file_path.iterdir() if file.is_file()]
     for file in files_only:
         if str(file).endswith(f"{datetime.today().strftime('%Y%m%d')}.csv"):
+        # if str(file).endswith("20250303.csv"):
             file_path = file
             file_name = file.name
             file_prefix = file.name.split('_')[0]
@@ -103,7 +111,7 @@ def stage_load(base_file_path: Optional[str] = base_file_path):
             # print(file_path, file_name, file_prefix)
 
             load_stage(stage_schema, file_prefix, file_path, "|", truncate=True)
-
+    
 def main():
     weather_data = fetch_weather(CITY, COUNTRY, pull_request)
 
@@ -116,6 +124,10 @@ def main():
     create_stage_files()
  
     stage_load()
+
+    table_load(str(prep_load_script))
+    
+    table_load(str(target_load_script))
 
 
 
