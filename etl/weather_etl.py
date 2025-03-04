@@ -1,5 +1,8 @@
+import requests
 import sys, os
 sys.path.insert(0,(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from datetime import datetime
+from typing import Final
 
 from json import load, dumps
 
@@ -9,17 +12,43 @@ from helper.utils import *
 
 
 process_uuid = str(uuid4())
-
-base_file_path = Path(__file__).parent.absolute().joinpath("data", "weather")
 stage_schema = 'stage'
 
-json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", "weather_20250228.json")
+base_file_path = Path(__file__).parent.absolute().joinpath("data", "weather")
+json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"weather_{datetime.today().strftime('%Y%m%d')}.json")
 
-location_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", "location_20250228.csv")
-current_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", "current_20250228.csv")
-hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", "hourly_20250228.csv")
-daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", "daily_20250228.csv")
+location_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"location_{datetime.today().strftime('%Y%m%d')}.csv")
+currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"currently_{datetime.today().strftime('%Y%m%d')}.csv")
+hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_{datetime.today().strftime('%Y%m%d')}.csv")
+daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_{datetime.today().strftime('%Y%m%d')}.csv")
 
+# base_file_path = os.path.dirname(os.path.realpath(__file__))
+
+# json_file_path = os.path.join(base_file_path,f'''data/weather/weather_{datetime.today().strftime("%Y%m%d")}.json''')
+# location_file_path = os.path.join(base_file_path,f'''data/weather/location_{datetime.today().strftime("%Y%m%d")}.csv''')
+# currently_file_path = os.path.join(base_file_path,f'''data/weather/currently_{datetime.today().strftime("%Y%m%d")}.csv''')
+# daily_file_path = os.path.join(base_file_path,f'''data/weather/daily_{datetime.today().strftime("%Y%m%d")}.csv''')
+# hourly_file_path = os.path.join(base_file_path,f'''data/weather/hourly_{datetime.today().strftime("%Y%m%d")}.csv''')
+
+# WeatherAPI Configuration
+API_KEY: Final[str] = "c2fe5ebd74734989a33163320252302"
+# BASE_URL: Final[str] = "http://api.weatherapi.com/v1/forecast.json?key=c2fe5ebd74734989a33163320252302&q=08854&days=1&aqi=no&alerts=no"
+BASE_URL: Final[str] = "http://api.weatherapi.com/v1/forecast.json"
+CITY: Final[str]= "New York"
+COUNTRY: Final[str] = "US"
+
+pull_request = False
+
+# Function to fetch weather data
+def fetch_weather(city: str, country: str, pull_request: bool = False):
+    if pull_request:
+        # params = {"q": f"{city},{country}", "appid": API_KEY, "units": "metric"}
+        params = {"key":API_KEY, "q": "08854", "days": "1", "aqi": "no", "alerts": "no"}
+        response = requests.get(BASE_URL, params=params)
+        return response.json()
+    else:
+        with open(json_file_path, "r") as data:
+            return load(data)
 
 def masssage_json_data():
     """
@@ -59,14 +88,14 @@ def create_stage_files() -> None:
 
     flatten_json(json_data['location'], location_file_path)
 
-    flatten_json(json_data['current'], current_file_path)
+    flatten_json(json_data['current'], currently_file_path)
 
 
 def stage_load(base_file_path: Optional[str] = base_file_path):
 
     files_only = [file for file in base_file_path.iterdir() if file.is_file()]
     for file in files_only:
-        if str(file).endswith(".csv"):
+        if str(file).endswith(f"{datetime.today().strftime('%Y%m%d')}.csv"):
             file_path = file
             file_name = file.name
             file_prefix = file.name.split('_')[0]
@@ -76,6 +105,11 @@ def stage_load(base_file_path: Optional[str] = base_file_path):
             load_stage(stage_schema, file_prefix, file_path, "|", truncate=True)
 
 def main():
+    weather_data = fetch_weather(CITY, COUNTRY, pull_request)
+
+    if pull_request:
+        with open(json_file_path, "w") as writej:
+            writej.write(dumps(weather_data, indent=2))
 
     masssage_json_data()
 
