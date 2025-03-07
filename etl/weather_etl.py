@@ -14,6 +14,7 @@ from helper.utils import *
 
 process_uuid = str(uuid4())
 stage_schema = 'stage'
+zipcode = "08854"
 
 base_file_path = Path(__file__).parent.absolute().joinpath("data", "weather")
 json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"weather_{datetime.today().strftime('%Y%m%d')}.json")
@@ -23,15 +24,15 @@ currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather
 hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_{datetime.today().strftime('%Y%m%d')}.csv")
 daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_{datetime.today().strftime('%Y%m%d')}.csv")
 
-prep_load_script = Path(__file__).parent.absolute().joinpath("prep_load.sql")
-target_load_script = Path(__file__).parent.absolute().joinpath("target_load.sql")
+# prep_load_script = Path(__file__).parent.absolute().joinpath("prep_load.sql")
+# target_load_script = Path(__file__).parent.absolute().joinpath("target_load.sql")
 
-# json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"weather_20250303.json")
+# json_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"weather_20250306.json")
 
-# location_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"location_20250303.csv")
-# currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"currently_20250303.csv")
-# hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_20250303.csv")
-# daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_20250303.csv")
+# location_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"location_20250306.csv")
+# currently_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"currently_20250306.csv")
+# hourly_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"hourly_20250306.csv")
+# daily_file_path = Path(__file__).parent.absolute().joinpath("data", "weather", f"daily_20250306.csv")
 
 
 # WeatherAPI Configuration
@@ -66,6 +67,11 @@ def masssage_json_data() -> None:
         json_data["forecast"]["forecastday"][0]["process_uuid"] = process_uuid
         json_data["forecast"]["forecastday"][0]["day"]["process_uuid"] = process_uuid
 
+        json_data["location"]["zipcode"] = zipcode
+        json_data["current"]["zipcode"] = zipcode
+        json_data["forecast"]["forecastday"][0]["zipcode"] = zipcode
+        json_data["forecast"]["forecastday"][0]["day"]["zipcode"] = zipcode
+
     # print(dumps(json_data, indent=2))
 
     with open(json_file_path, 'w') as json_obj:
@@ -83,7 +89,7 @@ def create_stage_files() -> None:
     flatten_json(json_data, 
                 hourly_file_path, 
                 record_path=['forecast', 'forecastday', 'hour'], 
-                meta=[['forecast', 'forecastday', 'date'], ['forecast', 'forecastday', 'date_epoch'], ['forecast', 'forecastday', 'process_uuid']]
+                meta=[['forecast', 'forecastday', 'date'], ['forecast', 'forecastday', 'date_epoch'], ['forecast', 'forecastday', 'process_uuid'], ['forecast', 'forecastday', 'zipcode']]
                 )
     
     # flatten_json(json_data["forecast"]["forecastday"][0]["hour"],hourly_file_path, meta=['forecast', 'forecastday', 'process_uuid'], )
@@ -103,7 +109,7 @@ def stage_load(base_file_path: Optional[str] = base_file_path) -> None:
     files_only = [file for file in base_file_path.iterdir() if file.is_file()]
     for file in files_only:
         if str(file).endswith(f"{datetime.today().strftime('%Y%m%d')}.csv"):
-        # if str(file).endswith("20250303.csv"):
+        # if str(file).endswith("20250306.csv"):
             file_path = file
             file_name = file.name
             file_prefix = file.name.split('_')[0]
@@ -125,9 +131,9 @@ def main():
  
     stage_load()
 
-    table_load(str(prep_load_script))
+    # table_load(str(prep_load_script))
     
-    table_load(str(target_load_script))
+    # table_load(str(target_load_script))
 
 
 

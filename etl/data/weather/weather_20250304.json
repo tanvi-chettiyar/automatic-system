@@ -8,7 +8,8 @@
     "tz_id": "America/New_York",
     "localtime_epoch": 1741113904,
     "localtime": "2025-03-04 13:45",
-    "process_uuid": "a297f3f9-8326-482f-bddf-f591505486c8"
+    "process_uuid": "21a78d0a-c24c-4e89-b3c3-d2c719bb0dbc",
+    "zipcode": "08854"
   },
   "current": {
     "last_updated_epoch": 1741113900,
@@ -44,7 +45,8 @@
     "uv": 3.1,
     "gust_mph": 13.6,
     "gust_kph": 21.9,
-    "process_uuid": "a297f3f9-8326-482f-bddf-f591505486c8"
+    "process_uuid": "21a78d0a-c24c-4e89-b3c3-d2c719bb0dbc",
+    "zipcode": "08854"
   },
   "forecast": {
     "forecastday": [
@@ -76,7 +78,8 @@
             "code": 1006
           },
           "uv": 0.8,
-          "process_uuid": "a297f3f9-8326-482f-bddf-f591505486c8"
+          "process_uuid": "21a78d0a-c24c-4e89-b3c3-d2c719bb0dbc",
+          "zipcode": "08854"
         },
         "astro": {
           "sunrise": "06:26 AM",
@@ -1050,7 +1053,8 @@
             "uv": 0
           }
         ],
-        "process_uuid": "a297f3f9-8326-482f-bddf-f591505486c8"
+        "process_uuid": "21a78d0a-c24c-4e89-b3c3-d2c719bb0dbc",
+        "zipcode": "08854"
       }
     ]
   }
