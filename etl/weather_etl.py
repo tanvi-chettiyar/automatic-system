@@ -42,7 +42,7 @@ BASE_URL: Final[str] = "http://api.weatherapi.com/v1/forecast.json"
 CITY: Final[str]= "New York"
 COUNTRY: Final[str] = "US"
 
-pull_request = False
+pull_request = True
 
 # Function to fetch weather data
 def fetch_weather(city: str, country: str, pull_request: bool = False):
@@ -123,13 +123,13 @@ def main():
 
     if pull_request:
         with open(json_file_path, "w") as writej:
-            writej.write(dumps(weather_data, indent=2))
+            writej.write(dumps(weather_data))
 
-    masssage_json_data()
+    # masssage_json_data()
 
-    create_stage_files()
+    # create_stage_files()
  
-    stage_load()
+    # stage_load()
 
     # table_load(str(prep_load_script))
     
