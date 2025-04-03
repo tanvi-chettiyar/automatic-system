@@ -1,0 +1,21 @@
+{
+    "database": 
+    {
+        "name": "Postgres", 
+        "host": "localhost", 
+        "port": "5432", 
+        "username": "postgers", 
+        "password": "myPassword", 
+        "airflow_conn": "my_postgres_conn"
+    },
+    "base_file_mac":
+    {
+        "filepath": "/Users/tanvi_rajkumar/Documents/GitRepo/automatic-system",
+        "conn_id": "my_fs_conn"
+    },
+    "base_file_linux":
+    {
+        "filepath": "",
+        "conn_id": ""
+    }
+}
