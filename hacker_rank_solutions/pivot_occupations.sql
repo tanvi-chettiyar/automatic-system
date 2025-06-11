@@ -9,7 +9,7 @@ select aaa.rnk,
     max(case when aaa.occupation='Singer' then aaa.name end) as singers,
     max(case when aaa.occupation='Actor' then aaa.name end) as actors
 from (
-select name, occupation, rank() over(partition by occupation order by name) as rnk
+select name, occupation, rank() over (partition by occupation order by name) as rnk
 from occupations
 ) as aaa
 group by rnk) as bbb
