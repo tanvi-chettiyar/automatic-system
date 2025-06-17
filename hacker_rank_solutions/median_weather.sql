@@ -1,3 +1,4 @@
+-- Query the median of the Northern Latitude from Station and round your answer to 4 decimal places.
 with lat as (
 select lat_n, row_number() over (order by lat_n) as rnk, count(*) over() as total
 from station
